@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>handleTask</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * modify by @LXK9301
+     * author by @leecobaby
+     * 2021-01-21
+     */
+
+    !(() => {
+      let api = ''
+      let secretp = ''
+      let taskId = ''
+      let itemId = ''
+      let actionType = ''
+      let inviteId = ''
+      let shopSign = ''
+      let body
+
+      switch (api) {
+        case "nian_collectScore":
+          body = collectScore(secretp, taskId, itemId, actionType, inviteId, shopSign)
+          break
+        case "nian_collectProduceScore":
+          body = collectProduceScore(secretp, taskId)
+          break
+        case "nian_killCoupon":
+          body = killCoupon(secretp, taskId)
+          break
+        case "nian_doShopLottery":
+          body = doShopLottery(shopSign)
+          break
+        case "nian_shopSignInWrite":
+          body = signInWrite(secretp, shopSign)
+          break
+        case "nian_pk_assistGroup":
+          body = pkAssignGroup(secretp, inviteId)
+          break
+        case "nian_pk_collectScore":
+          body = pkCollectScore(secretp, taskId, itemId)
+          break
+        case "nian_pk_doSteal":
+          body = pkStealGroup(secretp, shopSign)
+          break
+      }
+      document.write(JSON.stringify(body))
+    })()
+
+    function collectProduceScore(secretp, taskId) {
+      const extraData = {
+        "jj": 6,
+        "encrypt": 6,
+        "buttonid": "jmdd-react-smash_70",
+        "sceneid": "homePageh5"
+      }
+      let body = {
+        ...encode(secretp, extraData),
+        taskId: taskId
+      }
+      return body
+    }
+
+    function collectScore(secretp, taskId, itemId, actionType = null, inviteId = null, shopSign = null) {
+      const extraData = {
+        "jj": 6,
+        "encrypt": 6,
+        "buttonid": "jmdd-react-smash_70",
+        "sceneid": "homePageh5"
+      }
+      let body = {
+        ...encode(secretp, extraData),
+        taskId: taskId,
+        itemId: itemId
+      }
+      if (actionType) body['actionType'] = actionType
+      if (inviteId) body['inviteId'] = inviteId
+      if (shopSign) body['shopSign'] = shopSign
+      return body
+    }
+
+    function doShopLottery(shopSign) {
+      let body = { "shopSign": shopSign }
+      return body
+    }
+
+    function killCoupon(secretp, skuId) {
+      const extraData = {
+        "jj": 6,
+        "encrypt": 6,
+        "buttonid": "jmdd-react-smash_70",
+        "sceneid": "homePageh5"
+      }
+      let body = encode(secretp, extraData);
+      body['skuId'] = skuId
+      return body
+    }
+
+    function signInWrite(secretp, shopSign) {
+      const extraData = {
+        "jj": 6,
+        "encrypt": 6,
+        "buttonid": "jmdd-react-smash_70",
+        "sceneid": "homePageh5"
+      }
+      let body = {
+        ...encode(secretp, extraData),
+        shopSign: shopSign
+      }
+      return body
+    }
+
+    function pkAssignGroup(secretp, inviteId) {
+      const extraData = {
+        "jj": 6,
+        "encrypt": 6,
+        "buttonid": "jmdd-react-smash_70",
+        "sceneid": "homePageh5"
+      }
+      let body = {
+        ...encode(secretp, extraData),
+        inviteId: inviteId
+      }
+      return body
+    }
+
+    function pkCollectScore(secretp, taskId, itemId, actionType = null, inviteId = null, shopSign = null) {
+      const extraData = {
+        "jj": 6,
+        "encrypt": 6,
+        "buttonid": "jmdd-react-smash_70",
+        "sceneid": "homePageh5"
+      }
+      let body = {
+        ...encode(secretp, extraData),
+        taskId: taskId,
+        itemId: itemId
+      }
+      if (actionType) body['actionType'] = actionType
+      if (inviteId) body['inviteId'] = inviteId
+      if (shopSign) body['shopSign'] = shopSign
+      return body
+    }
+
+    function pkStealGroup(secretp, stealId) {
+      const extraData = {
+        "jj": 6,
+        "encrypt": 6,
+        "buttonid": "jmdd-react-smash_70",
+        "sceneid": "homePageh5"
+      }
+      let body = {
+        ...encode(secretp, extraData),
+        stealId: stealId
+      }
+      return body
+    }
+
+    function encode(secretp, extraData) {
+      const temp = {
+        "extraData": extraData,
+        "random": getRnd(),
+        "secretp": secretp,
+      }
+      return { "ss": (JSON.stringify(temp)) };
+    }
+
+    function getRnd() {
+      return Math.floor(1e7 * Math.random()).toString();
+    }
+  </script>
+</body>
+
+</html>
